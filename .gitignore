@@ -1,0 +1,4 @@
+./www/php/node_modules
+./www/php/vendor
+./www/node/node_modules
+./www/node/files/realter/*
