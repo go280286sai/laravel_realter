@@ -46,14 +46,14 @@
                   <label for="gender_id">Пол</label>
                   <div class="form-control">
                       <input class="form-check-input" type="radio" name="gender_id" id="gender_id"
-                             value="1">
+                             value="2">
                       <label class="form-check-label" for="gender_id">
                           Мужской
                       </label>
                   </div>
                   <div class="form-control">
                       <input class="form-check-input" type="radio" name="gender_id" id="gender_id"
-                             value="2">
+                             value="3">
                       <label class="form-check-label" for="gender_id">
                           Женский
                       </label>

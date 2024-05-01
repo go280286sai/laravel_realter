@@ -38,7 +38,22 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        User::add($request->all());
+      $validated =  $request->validate([
+            "name" => "required|string",
+            "birthday" => "nullable|date",
+            "email" => "required|string|unique:users",
+            "phone" => "required|numeric",
+            "gender_id" => "nullable|numeric",
+            "description" => "nullable|string",
+            "password" => "required|string",
+        ]);
+        $data = array_map(function ($value) {
+            if($value!=""){
+                return $value;
+            }
+        }, $validated);
+
+        User::add($data);
 
         return redirect('/user/users');
     }
@@ -64,9 +79,22 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
-        User::edit($request->all(), $id);
+        $validated =  $request->validate([
+            "name" => "required|string",
+            "birthday" => "nullable|date",
+            "phone" => "required|numeric",
+            "gender_id" => "nullable|numeric",
+            "description" => "nullable|string",
+            "password" => "required|string",
+        ]);
+        $data = array_map(function ($value) {
+            if($value!=""){
+                return $value;
+            }
+        }, $validated);
+        User::edit($data, $id);
 
         return redirect('/user/users');
     }
@@ -96,7 +124,11 @@ class UserController extends Controller
         return redirect('/user/users');
     }
 
-    public function createMessage(string $id): View
+    /**
+     * @param int $id
+     * @return View
+     */
+    public function createMessage(int $id): View
     {
         $user = User::find($id);
 
@@ -105,11 +137,12 @@ class UserController extends Controller
 
     public function sendMessage(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'content' => 'required|string',
             'title' => 'required|string',
+            'email' => 'required|string',
         ]);
-        $fields = MyFunc::stripTags($request->all());
+        $fields = MyFunc::stripTags($validated);
         Mail::to($fields['email'])->cc(Auth::user()->email)->send(new User_email($fields));
         Log::info('Answer the message: '.$fields['email'].' '.$fields['title'].' --'.Auth::user()->name);
 

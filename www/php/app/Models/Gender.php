@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Gender extends Model
 {
     use HasFactory;
 
-    public function user(): HasOne
+    public function user(): HasMany
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(User::class);
     }
 
-    public function client(): HasOne
+    public function client(): HasMany
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(Client::class);
     }
 }

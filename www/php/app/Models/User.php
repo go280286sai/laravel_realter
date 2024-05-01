@@ -4,9 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -80,6 +82,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function gender(): BelongsTo
+    {
+        return $this->belongsTo(Gender::class);
+    }
+
+    /**
      * @param array $fields
      * @return void
      */
@@ -126,14 +136,26 @@ class User extends Authenticatable
         $object = self::find($id);
         $object->delete();
     }
-
+    public function updateProfilePhotoUser($image)
+    {
+        if ($image != null) {
+            dd($image);
+            Storage::delete('img/profile/'.$this->image);
+            $fileName = Str::random(10).'.'.$image->extension();
+            $image->storeAs('/img/profile/', $fileName);
+            $this->profile_photo_path = $fileName;
+            $this->save();
+        } else {
+            dd("img not find");
+        }
+    }
     /**
      * @return string
      */
     public function getAvatar(): string
     {
         if ($this->profile_photo_path == null) {
-            return '/profile-photos/no-user-image.png';
+            return '/img/profile/no-user-image.png';
         }
 
         return '/'.$this->profile_photo_path;

@@ -42,6 +42,7 @@ class ClientController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         Client::add($request->all());
 
         return redirect('/user/client');

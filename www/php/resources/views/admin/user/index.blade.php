@@ -49,7 +49,7 @@
                                     <br><strong>Дата регистрации:</strong> {{date_format($user->created_at, 'd-m-Y')}}
                                 </td>
                                 <td>
-                                    <img src="{{$user->getAvatar()}}" alt="" class="img-responsive" width="150">
+                                    <img src="{{\Illuminate\Support\Facades\Storage::url($user->getAvatar())}}" alt="no image" class="img-responsive" width="150">
                                 </td>
                                 <td>
                                     <form action="{{env('APP_URL').'/user/users/'.$user->id.'/edit'}}"

@@ -139,8 +139,6 @@
                 </li>
                 <li><a href="{{env('APP_URL').'/user/profile'}}"><i class="fa fa-user-plus"></i>
                         <span>Профиль</span></a></li>
-                <li><a href="{{env('APP_URL').'/telescope'}}" target="_blank"><i class="fa fa-server"></i> <span>Telescope</span></a>
-                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
