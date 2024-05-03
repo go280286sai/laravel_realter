@@ -82,6 +82,7 @@ Route::group(['prefix' => 'user', 'middleware' => IsAuthUser::class], function (
 
     //    UserController
     Route::resource('/users', UserController::class);
+    Route::post('/updateProfile', [UserController::class, 'updateProfile']);
     Route::controller(UserController::class)->middleware(IsAdminMiddleware::class)->group(function () {
         Route::get('/comment/{id}', 'comment');
         Route::post('/add_comment_user', 'add_comment_user');

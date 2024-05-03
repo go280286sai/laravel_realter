@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -136,17 +138,20 @@ class User extends Authenticatable
         $object = self::find($id);
         $object->delete();
     }
-    public function updateProfilePhotoUser($image)
+
+    /**
+     * @param $image
+     * @return void
+     */
+    public static function updateProfilePhotoUser($image): void
     {
         if ($image != null) {
-            dd($image);
-            Storage::delete('img/profile/'.$this->image);
             $fileName = Str::random(10).'.'.$image->extension();
             $image->storeAs('/img/profile/', $fileName);
-            $this->profile_photo_path = $fileName;
-            $this->save();
-        } else {
-            dd("img not find");
+            $user = self::find(Auth::user()->id);
+            Storage::delete('img/profile/'.$user->profile_photo_path);
+            $user->profile_photo_path = 'img/profile/'.$fileName;
+            $user->save();
         }
     }
     /**

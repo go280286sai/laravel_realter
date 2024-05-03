@@ -148,4 +148,19 @@ class UserController extends Controller
 
         return redirect('/user/users');
     }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateProfile(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'photo' => 'image|max:1024']);
+        User::updateProfilePhotoUser($request->file('photo'));
+
+        return redirect()->back();
+    }
+
+
 }
