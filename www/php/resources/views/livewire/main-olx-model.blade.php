@@ -14,13 +14,21 @@
                             <input type="text" name="url" class="form-control"
                                    aria-describedby="emailHelp" wire:model="url">
                         </div>
-                        <div class="btn btn-success mt-2" wire:click="setUrl">Обновить</div>
+                        <div class="btn btn-success mt-2 mb-2" wire:click="setUrl">Обновить</div>
                     </div>
                     <div class="form-group">
                         <table>
                             <tr>
+                                <td><a href="{{url("/user/create_apartment")}}">
+                                        <div
+                                            class="btn btn-danger">Создать объявление</div>&nbsp;
+                                    </a></td>
                                 <td>
-                                    <div class="btn btn-danger">Запустить обновление</div>&nbsp;
+                                <td>
+                                    <div class="btn btn-danger"  wire:click="getOlxData">Запустить обновление</div>&nbsp;
+                                </td>
+                                <td>
+                                    <div class="btn btn-danger"  wire:click="loadOlxData">Загрузить данные</div>&nbsp;
                                 </td>
                                 <td>
                                     <div class="btn btn-danger">Выполнить синхронизацию</div>&nbsp;
@@ -33,29 +41,12 @@
                                             <div class="btn btn-danger">Сохранить как</div>&nbsp;
                                     </td>
                                     <td>
-                                        <div class="btn btn-danger">Удалить все данные</div>&nbsp;
+                                        <div class="btn btn-danger" wire:click="cleanAll">Удалить все данные</div>&nbsp;
                                     </td>
                                 @endif
                             </tr>
                         </table>
                         <br>
-                        <table>
-                            <tr>
-                                <td><a href="{{url("/user/create_apartment")}}">
-                                        <div
-                                            class="btn btn-danger">Создать объявление</div>&nbsp;
-                                    </a></td>
-                                <td>
-                                    <div class="btn btn-danger">Удалить из базы</div>&nbsp;
-                                </td>
-                                <td>
-                                    <div class="btn btn-danger">Добавить в избранное</div>&nbsp;
-                                </td>
-                                <td>
-                                    <div class="btn btn-danger">Удалить из избранного</div>&nbsp;
-                                </td>
-                            </tr>
-                        </table>
                     </div>
                     <div>Среднее отклонение прогноза: <b>{{\App\Models\Setting::getMAE()}}грн.</b> или
                                                 <b>{{round(\App\Models\Setting::getMAE()/$rate, 2)}}$</b></div>
@@ -83,15 +74,23 @@
                                 <tr>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}">
                                         <div class="form-check">
-                                            <input v-model="check_items" name="check_items"
-                                                   class="form-check rounded text-danger" type="checkbox"
-                                                   value="{{$apartment->id}}" id="flexCheckDefault">
+                                           @if($apartment->favorites==1)
+                                                <form action="{{url('/user/remove_favorite')}}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$apartment->id}}">
+                                                    <button type="submit" class="btn fa fa-star" title="Удалить из избранного"></button>
+                                                </form>
+
+                                            @else
+                                                <form action="{{url('/user/add_favorite')}}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{$apartment->id}}">
+                                                    <button type="submit" class="btn fa fa-star-o" title="Добавить в избранное"></button>
+                                                </form>
+                                           @endif
                                         </div>
                                     </td>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}"> {{$apartment->title}}
-                                        @if($apartment->favorites==1)
-                                            <span class="inline-block fa fa-star" title="В избранном"></span>
-                                        @endif
                                     </td>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}"> {{$apartment->rooms}}</td>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}">{{$apartment->floor}} </td>

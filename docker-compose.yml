@@ -26,24 +26,24 @@ services:
         - learn-db:/var/lib/mysql
       networks:
         - default
-    flask:
-       build: ./www/flask
-       container_name: flask
-       ports:
-         - "8000:8000"
-       volumes:
-         - ./www/flask:/app
-       networks:
-         - default
-    nodejs:
-        build: ./www/node
-        container_name: nodejs
-        restart: unless-stopped
-        ports:
-          - "3000:3000"
-        volumes:
-          - ./www/node:/usr/src/app
-        working_dir: /usr/src/app
+#    flask:
+#       build: ./www/flask
+#       container_name: flask
+#       ports:
+#         - "8000:8000"
+#       volumes:
+#         - ./www/flask:/app
+#       networks:
+#         - default
+#    nodejs:
+#        build: ./www/node
+#        container_name: nodejs
+#        restart: unless-stopped
+#        ports:
+#          - "3000:3000"
+#        volumes:
+#          - ./www/node:/usr/src/app
+#        working_dir: /usr/src/app
 
 networks:
   default:

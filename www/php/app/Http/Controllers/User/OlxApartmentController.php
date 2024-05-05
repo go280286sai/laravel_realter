@@ -16,6 +16,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as Back;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -269,26 +270,29 @@ class OlxApartmentController extends Controller
 
     /**
      * @param Request $request
-     * @return void
+     * @return Redirector|RedirectResponse
      */
-    public function addFavorite(Request $request): void
+    public function addFavorite(Request $request): Redirector|RedirectResponse
     {
-        $data = $request->get('checks');
-        foreach ($data as $item) {
-            OlxApartment::addFavorite($item);
-        }
+        $validated = $request->validate([
+            'id' => 'required|numeric',
+        ]);
+        OlxApartment::addFavorite($validated['id']);
+
+        return redirect('/user/apartment');
     }
 
     /**
      * @param Request $request
-     * @return void
+     * @return Redirector|RedirectResponse
      */
-    public function removeFavorite(Request $request): void
+    public function removeFavorite(Request $request): Redirector|RedirectResponse
     {
-        $data = $request->get('checks');
-        foreach ($data as $item) {
-            OlxApartment::removeFavorite($item);
-        }
+        $validated = $request->validate([
+            'id' => 'required|numeric',
+        ]);
+        OlxApartment::removeFavorite($validated['id']);
+        return redirect('/user/apartment');
     }
 
     /**

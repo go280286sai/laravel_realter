@@ -11,9 +11,6 @@
             <div class="box">
                 <div class="box-body" id="apartment">
                     <div class="form-group">
-                        <h1>
-                            Здравствуйте, {{$user->name}}! Курс доллара на {{\Illuminate\Support\Carbon::now()->format('d-M-Y').' составляет '}}<strong>{{$rate}}$</strong>
-                        </h1>
                         <br>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
@@ -36,9 +33,9 @@
                                     <td>{{$item->etajnost}}</td>
                                     <td>{{$item->location}}</td>
                                     <td>{{$item->price}}грн.</td>
-                                    <td>{{round($item->price/$rate->dollar,2)}}$</td>
-                                    <td><p class={{(round($item->real_price/$rate->dollar,2)-round($item->price/$rate->dollar,2))>0?"text-red-700":"text-blue-700"}}>{{round($item->real_price/$rate->dollar,2)}}$  &ensp; &ensp; &ensp; &ensp;
-                                            {{round(($item->real_price/$rate->dollar - $item->price/$rate->dollar),2)}}$</p></td>
+                                    <td>{{round($item->price/$rate,2)}}$</td>
+                                    <td><p class={{(round($item->real_price/$rate,2)-round($item->price/$rate,2))>0?"text-red-700":"text-blue-700"}}>{{round($item->real_price/$rate,2)}}$  &ensp; &ensp; &ensp; &ensp;
+                                            {{round(($item->real_price/$rate - $item->price/$rate),2)}}$</p></td>
                                     <td>{{$item->count}}</td>
                                 </tr>
                             @endforeach

@@ -18,7 +18,7 @@ class OlxApartment extends Model
      * @var string[]
      */
     protected $fillable = ['title', 'url', 'rooms', 'floor', 'etajnost', 'price', 'description',
-        'status', 'comment', 'location', 'type', 'area', 'real_price', 'client_id'];
+        'status', 'comment', 'location', 'type', 'area', 'real_price', 'client_id', 'date'];
 
     /**
      * @param array $fields
@@ -28,14 +28,20 @@ class OlxApartment extends Model
     {
         $object = new self();
         $object->fill($fields);
-        if (isset($fields['date'])) {
-            $object->date = $object->getDateNew($fields['date']);
-        } else {
-            $object->date = \Illuminate\Support\Carbon::now()->format('Y-m-d');
-        }
         $object->save();
     }
+    public static function price(string $price)
+    {
+        $price = explode(' ', $price);
+        unset($price[count($price) - 1]);
+        $price = implode('', $price);
+        return (int)$price;
+    }
 
+    public static function location(string $location)
+    {
+        return explode(' ', $location)[1];
+    }
     /**
      * @param array $fields
      * @return void
@@ -123,7 +129,7 @@ class OlxApartment extends Model
      * @param $field
      * @return string
      */
-    public function getDateNew($field): string
+    public static function getDateNew($field): string
     {
         $param = explode(' ', $field);
         if (strlen($param[0]) > 2) {

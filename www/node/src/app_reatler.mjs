@@ -8,6 +8,7 @@ const run = async (url) => {
         await obj.getUrl();
         await obj.saveData(1);
         for (let i = 2; i <= 25; i++) {
+            console.log(i, " of 25");
             obj = new Realter();
             await obj.getUrls(url+prefix+i);
             await obj.getUrl();

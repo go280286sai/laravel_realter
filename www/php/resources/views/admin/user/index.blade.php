@@ -5,22 +5,17 @@
 @endsection
 
 @section('text')
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
                 Список пользователей
             </h1>
         </section>
-        <!-- Main content -->
         <section class="content">
-            <!-- Default box -->
             <div class="box">
-                <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <a href="{{env('APP_URL').'/user/users/create'}}" class="btn btn-success">Добавить
+                        <a href="{{url('/user/users/create')}}" class="btn btn-success">Добавить
                             пользователя</a>
                     </div>
                     <table id="example1" class="table table-bordered table-striped">
@@ -49,15 +44,16 @@
                                     <br><strong>Дата регистрации:</strong> {{date_format($user->created_at, 'd-m-Y')}}
                                 </td>
                                 <td>
-                                    <img src="{{\Illuminate\Support\Facades\Storage::url($user->getAvatar())}}" alt="no image" class="img-responsive" width="150">
+                                    <img src="{{\Illuminate\Support\Facades\Storage::url($user->profile_photo_path)}}"
+                                         alt="no image" class="img-responsive" width="150">
                                 </td>
                                 <td>
-                                    <form action="{{env('APP_URL').'/user/users/'.$user->id.'/edit'}}"
+                                    <form action="{{url('/user/users/'.$user->id.'/edit')}}"
                                           method="get">
                                         <button class="btn" title="Редактировать"><i class="fa fa-bars"></i>
                                         </button>
                                     </form>
-                                    <form action="{{env('APP_URL').'/user/users/'.$user->id}}" method="post">
+                                    <form action="{{url('/user/users/'.$user->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="id" value="{{$user->id}}">
@@ -66,12 +62,12 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="{{env('APP_URL').'/user/createMessage/'.$user->id}}"
+                                    <form action="{{url('/user/createMessage/'.$user->id)}}"
                                           method="get">
                                         <button class="btn" title="Отправить сообщение пользователю"><i
                                                 class="fa fa-mail-forward"></i></button>
                                     </form>
-                                    <form action="{{env('APP_URL').'/user/comment/'.$user->id}}" method="get">
+                                    <form action="{{url('/user/comment/'.$user->id)}}" method="get">
                                         <button class="btn" title="Добавить комментарий"><i
                                                 class="fa fa-comment"></i></button>
                                     </form>
@@ -81,17 +77,12 @@
                         @endforeach
                     </table>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 @endsection
 
 @section('js')
-    <!-- page script -->
     <script>
         $(function () {
             $("#example1").DataTable();

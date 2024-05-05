@@ -57,16 +57,11 @@
             <div class="navbar-custom-menu mr-10">
                 <ul class="nav navbar-nav">
                     <li class="dropdown user user-menu ">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{\Illuminate\Support\Facades\Storage::url($getUser->profile_photo_path)}}"
-                                 class="user-image" alt="{{$getUser->name}}">
-                            <span class="hidden-xs">{{$getUser->name}}</span>
-                        </a>
                         <ul class="dropdown-menu ">
                             <!-- User image -->
                             <li class="user-header">
                                 <img
-                                    src="{{env('APP_URL').'/'.$getUser->profile_photo_path}}"
+                                    src="{{\Illuminate\Support\Facades\Storage::url($getUser->profile_photo_path)}}"
                                     class="img-circle inline" alt="{{$getUser->name}}">
                                 <p>
                                     {{$getUser->name}}
@@ -87,9 +82,7 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- Control Sidebar Toggle Button -->
                     <li>
-                        {{--                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>--}}
                     </li>
                 </ul>
             </div>
@@ -103,12 +96,11 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{env('APP_URL').'/'.\Illuminate\Support\Facades\Auth::user()->profile_photo_path}}"
-                         class="img-circle" alt="User Image">
+                    <img src="{{\Illuminate\Support\Facades\Storage::url(\Illuminate\Support\Facades\Auth::user()->profile_photo_path)}}"
+                         class="logo_mini" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{\Illuminate\Support\Facades\Auth::user()->name}}</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
             <!-- search form -->
@@ -125,20 +117,23 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>
-                <li><a href="{{env('APP_URL').'/user/dashboard'}}"><i class="fa fa-dashboard"></i>
+                <li><a href="{{url('/user/dashboard')}}"><i class="fa fa-dashboard"></i>
                         <span>Админ-панель</span></a></li>
-                <li><a href="{{env('APP_URL').'/user/apartment'}}"><i class="fa fa-sticky-note-o"></i> <span>Недвижимость</span></a>
+                <li><a href="{{url('/user/apartment')}}"><i class="fa fa-sticky-note-o"></i> <span>Недвижимость</span></a>
                 </li>
-                <li><a href="{{env('APP_URL').'/user/client'}}"><i class="fa fa-user-circle"></i>
+                <li><a href="{{url('/user/client')}}"><i class="fa fa-user-circle"></i>
                         <span>Клиенты</span></a></li>
-                <li><a href="{{env('APP_URL').'/user/service'}}"><i class="fa fa-user-o"></i> <span>Услуги</span></a>
+                <li><a href="{{url('/user/service')}}"><i class="fa fa-user-o"></i> <span>Услуги</span></a>
                 </li>
-                <li><a href="{{env('APP_URL').'/user/documents'}}"><i class="fa fa-sticky-note-o"></i>
+                <li><a href="{{url('/user/documents')}}"><i class="fa fa-sticky-note-o"></i>
                         <span>Заявки</span></a></li>
-                <li><a href="{{env('APP_URL').'/user/users'}}"><i class="fa fa-users"></i> <span>Пользователи</span></a>
+                <li><a href="{{url('/user/users')}}"><i class="fa fa-users"></i> <span>Пользователи</span></a>
                 </li>
-                <li><a href="{{env('APP_URL').'/user/profile'}}"><i class="fa fa-user-plus"></i>
+                <li><a href="{{url('/user/profile')}}"><i class="fa fa-user-plus"></i>
                         <span>Профиль</span></a></li>
+                <li>
+                    <a href="{{url('/user/exit')}}"><i class="fa fa-sign-out"></i> <span>Выход</span></a>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -165,32 +160,32 @@
 
 @vite('resources/js/app.js')
 
-<script src="{{env('APP_URL').'/assets/plugins/jQuery/jquery-3.7.1.min.js'}}"></script>
+<script src="{{asset('/assets/plugins/jQuery/jquery-3.7.1.min.js')}}"></script>
 
-<script src="{{env('APP_URL').'/assets/bootstrap/js/bootstrap.min.js'}}"></script>
+<script src="{{asset('/assets/bootstrap/js/bootstrap.min.js')}}"></script>
 <!-- Select2 -->
-<script src="{{env('APP_URL').'/assets/plugins/select2/select2.full.min.js'}}"></script>
+<script src="{{asset('/assets/plugins/select2/select2.full.min.js')}}"></script>
 <!-- bootstrap datepicker -->
-<script src="{{env('APP_URL').'/assets/plugins/datepicker/bootstrap-datepicker.js'}}"></script>
+<script src="{{asset('/assets/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
 <!-- SlimScroll -->
-<script src="{{env('APP_URL').'/assets/plugins/slimScroll/jquery.slimscroll.min.js'}}"></script>
+<script src="{{asset('/assets/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
-<script src="{{env('APP_URL').'/assets/plugins/fastclick/fastclick.js'}}"></script>
+<script src="{{asset('/assets/plugins/fastclick/fastclick.js')}}"></script>
 <!-- iCheck 1.0.1 -->
-<script src="{{env('APP_URL').'/assets/plugins/iCheck/icheck.min.js'}}"></script>
+<script src="{{asset('/assets/plugins/iCheck/icheck.min.js')}}"></script>
 <!-- AdminLTE App -->
-<script src="{{env('APP_URL').'/assets/dist/js/app.min.js'}}"></script>
+<script src="{{asset('/assets/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{env('APP_URL').'/assets/dist/js/demo.js'}}"></script>
+<script src="{{asset('/assets/dist/js/demo.js')}}"></script>
 <!-- Plugins for input text -->
-<script src="{{env('APP_URL').'/plugins/ckeditor/ckeditor.js'}}"></script>
-<script src="{{env('APP_URL').'/plugins/ckfinder/ckfinder.js'}}"></script>
+<script src="{{asset('/assets/plugins/ckeditor/ckeditor.js')}}"></script>
+<script src="{{asset('/assets/plugins/ckfinder/ckfinder.js')}}"></script>
 @section('js')
 @show
 
 <script>
     $(document).ready(function () {
-        var editor = CKEDITOR.replaceAll();
+        const editor = CKEDITOR.replaceAll();
         CKFinder.setupCKEditor(editor);
     })
 
