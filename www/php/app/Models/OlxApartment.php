@@ -191,9 +191,9 @@ class OlxApartment extends Model
         if ($image == null) {
             return;
         }
-        Storage::delete('uploads/img/' . $image);
+        Storage::delete('upload/img/' . $image);
         $filename = $name . '.' . $image->extension();
-        $image->storeAs('uploads/img/', $filename);
+        $image->storeAs('upload/img/', $filename);
     }
 
     /**
@@ -202,6 +202,6 @@ class OlxApartment extends Model
      */
     public static function getImage(string $name): string
     {
-        return Storage::url('/uploads/img/' . $name);
+        return Storage::url('/upload/img/' . $name);
     }
 }

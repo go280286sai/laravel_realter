@@ -3,15 +3,18 @@
 namespace App\Livewire;
 
 use App\Func\MyFunc;
+use App\Http\Controllers\User\OlxApartmentController;
 use App\Http\Controllers\User\ResearchController;
 use App\Jobs\OlxApartmentJob;
 use App\Models\OlxApartment;
 use App\Models\Rate;
 use App\Models\Research;
+use App\Models\Setting;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -28,6 +31,7 @@ class MainOlxModel extends Component
     public string $url = '';
     public bool $status_sync = false;
     public int $time = 0;
+    public ?string $mae="0";
 
 
     public function mount(): void
@@ -37,7 +41,9 @@ class MainOlxModel extends Component
         $this->url = $this->resource->url;
         $this->OlxApartment = OlxApartment::all()->sortByDesc('date');
         $this->rate = MyFunc::getDollar();
-        $this->token = MyFunc::getToken();
+        $this->token = MyFunc::getToken()['token'];
+//        $this->mae=Setting::all()->first()?->MAE;
+
     }
 
 
@@ -119,11 +125,23 @@ class MainOlxModel extends Component
         OlxApartment::cleanBase();
     }
 
+    /**
+     * @return void
+     */
+    public function runSync(): void
+    {
+        try {
+            Http::post('http://192.168.50.70:5000/apartment', ['token' => $this->token]);
+        }catch (Exception $exception){
+       Log::info('Error: ' . $exception->getMessage() . ' Line: ' . $exception->getLine() . ' Data: ' . date('Y-m-d H:i:s'));
+        }
+    }
+
     public function render()
     {
 
         return view('livewire.main-olx-model',
             ['apartments' => $this->OlxApartment, 'rate' => $this->rate, 'token' => $this->token,
-                'status_sync' => $this->status_sync]);
+                'status_sync' => $this->status_sync, 'mae' => $this->mae]);
     }
 }

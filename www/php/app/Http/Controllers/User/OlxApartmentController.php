@@ -20,6 +20,8 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class OlxApartmentController extends Controller
 {
@@ -41,6 +43,7 @@ class OlxApartmentController extends Controller
         $request->validate([
             'title' => 'unique:olx_apartments',
         ]);
+
         OlxApartmentJob::dispatch($request->all())->onQueue('olx_apartment');
     }
 
@@ -83,18 +86,14 @@ class OlxApartmentController extends Controller
         return back();
     }
 
-    /**
-     * @param Request $request
-     * @return Back
-     */
-    public function saveJson(Request $request): Back
+
+    public function saveJson(): StreamedResponse
     {
         $data = OlxApartment::all();
         $now = Carbon::now()->format('d_m_Y');
         $name = 'Olx_Apartment_' . $now;
-
-        return Response::make($data)->header('Content-Type', 'application/json;charset=utf-8')
-            ->header('Content-Disposition', "attachment;filename=$name.json");
+        Storage::put('uploads/' . $name . '.json', json_encode($data->toArray()));
+        return Storage::download('uploads/' . $name . '.json');
     }
 
     /**
@@ -165,15 +164,7 @@ class OlxApartmentController extends Controller
      */
     public function create(): View
     {
-        $location = MyFunc::getLocation();
-        $contacts = Client::all();
-        $rate = MyFunc::getDollar();
-
-        return view('admin.parser.apartment.olx.create', [
-            'loc' => $location,
-            'rate' => $rate,
-            'contacts' => $contacts,
-        ]);
+        return view('admin.parser.apartment.olx.create');
     }
 
     /**
@@ -196,9 +187,11 @@ class OlxApartmentController extends Controller
         $fields = MyFunc::stripTags($request->all());
         $fields['type'] = env('APP_NAME');
         $fields['url'] = env('APP_URL') . '/user/client/' . $fields['client_id'];
-        OlxApartmentJob::dispatch($fields)->onQueue('olx_apartment');
+        $fields['date'] = Carbon::now();
 
-        return back();
+        OlxApartment::add($fields);
+
+        return back()->with('success', 'Успешно добавлено');
     }
 
     /**

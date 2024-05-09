@@ -31,17 +31,21 @@
                                     <div class="btn btn-danger"  wire:click="loadOlxData">Загрузить данные</div>&nbsp;
                                 </td>
                                 <td>
-                                    <div class="btn btn-danger">Выполнить синхронизацию</div>&nbsp;
+                                    <div class="btn btn-danger" wire:click="runSync">Выполнить синхронизацию</div>&nbsp;
                                 </td>
                                 <td><a href="{{url('/user/olx_apartment_delete_index')}}">
                                         <div class="btn btn-danger">Список удаленных</div>&nbsp;
                                     </a></td>
                                 @if(\Illuminate\Support\Facades\Auth::user()->is_admin==1)
                                     <td>
-                                            <div class="btn btn-danger">Сохранить как</div>&nbsp;
+                                        <form action="{{url('user/saveJson')}}" method="post">
+                                            @csrf
+                                            <button class="btn btn-danger" type="submit">Сохранить как</button>
+                                        </form>
+
                                     </td>
                                     <td>
-                                        <div class="btn btn-danger" wire:click="cleanAll">Удалить все данные</div>&nbsp;
+                                        <div class="btn btn-danger">Удалить все данные</div>&nbsp;
                                     </td>
                                 @endif
                             </tr>
@@ -53,8 +57,6 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr class="bg-orange-400">
-                                <th scope="col">
-                                </th>
                                 <th scope="col">Заголовок</th>
                                 <th scope="col">Комнаты</th>
                                 <th scope="col">Этаж</th>
@@ -62,7 +64,6 @@
                                 <th scope="col">Описание</th>
                                 <th scope="col">Цена</th>
                                 <th scope="col">Прогноз</th>
-                                <th scope="col">Тип</th>
                                 <th scope="col">Расположение</th>
                                 <th scope="col">Время</th>
                                 <th scope="col">Комментарий</th>
@@ -72,24 +73,6 @@
                             <tbody>
                             @foreach($apartments as $apartment)
                                 <tr>
-                                    <td class="{{$apartment->status==0?"bg-orange-200":''}}">
-                                        <div class="form-check">
-                                           @if($apartment->favorites==1)
-                                                <form action="{{url('/user/remove_favorite')}}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="id" value="{{$apartment->id}}">
-                                                    <button type="submit" class="btn fa fa-star" title="Удалить из избранного"></button>
-                                                </form>
-
-                                            @else
-                                                <form action="{{url('/user/add_favorite')}}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="id" value="{{$apartment->id}}">
-                                                    <button type="submit" class="btn fa fa-star-o" title="Добавить в избранное"></button>
-                                                </form>
-                                           @endif
-                                        </div>
-                                    </td>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}"> {{$apartment->title}}
                                     </td>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}"> {{$apartment->rooms}}</td>
@@ -112,7 +95,6 @@
                                             <span class="inline-block fa fa-money" title="Выгодное предложение"></span>
                                         @endif
                                     </td>
-                                    <td class="{{$apartment->status==0?"bg-orange-200":''}}">{{$apartment->type}} </td>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}"> {{$apartment->location}}</td>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}">{{\Illuminate\Support\Carbon::createFromFormat('Y-m-d', $apartment->date)->format('d-m-Y')}} </td>
                                     <td class="{{$apartment->status==0?"bg-orange-200":''}}">{{$apartment->comment}} </td>
@@ -137,6 +119,20 @@
                                             <button onclick="return confirm('Вы уверенны')" class="btn"
                                                     title="Удалить"><i class="fa fa-trash"></i></button>
                                         </form>
+                                                @if($apartment->favorites==1)
+                                                    <form action="{{url('/user/remove_favorite')}}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{$apartment->id}}">
+                                                        <button type="submit" class="btn fa fa-star" title="Удалить из избранного"></button>
+                                                    </form>
+
+                                                @else
+                                                    <form action="{{url('/user/add_favorite')}}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{$apartment->id}}">
+                                                        <button type="submit" class="btn fa fa-star-o" title="Добавить в избранное"></button>
+                                                    </form>
+                                                @endif
                                     </td>
                                 </tr>
                             @endforeach

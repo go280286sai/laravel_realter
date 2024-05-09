@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\OlxApartment;
+use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,20 +14,32 @@ class ApiController extends Controller
 {
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return void
      */
-    public function getFiles(Request $request): JsonResponse
+    public function getFiles(Request $request): void
     {
         try {
             $name = $request->get('name');
             OlxApartment::uploadImage($name, $request->file('file'));
             Log::info('UploadImage:'.Auth::id());
 
-            return response()->json(['status' => 'ok']);
         } catch (\Exception $e) {
             Log::info('Error UploadImage:'.Auth::id());
+        }
+    }
 
-            return response()->json(['status' => 'error'])->setStatusCode(400);
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function getMae(Request $request): void
+    {
+        try {
+            $value = $request->json('mae');
+            Setting::addSetting(['name' => 'mae', 'text' => $value]);
+            Log::info('AddSetting:'.Auth::id());
+        }catch (\Exception $e) {
+            Log::info('Error AddSetting:'.Auth::id());
         }
     }
 }

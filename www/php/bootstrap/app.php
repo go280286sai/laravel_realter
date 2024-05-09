@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
        $middleware->use([
-           \App\Http\Middleware\ReturnDashboard::class,
+//           \App\Http\Middleware\ReturnDashboard::class,
        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -5,6 +5,8 @@ namespace App\Func;
 
 use App\Models\OlxApartment;
 use App\Models\Rate;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -27,12 +29,13 @@ class MyFunc
      */
     public static function getLocation(): array
     {
-        if (Cache::has('location')) {
-            $location = Cache::get('location');
-        } else {
+//        if (Cache::has('location')) {
+//            $location = Cache::get('location');
+//        } else {
+//            $location = OlxApartment::all('location')->groupBy('location')->toArray();
+//            Cache::put('location', $location);
+//        }
             $location = OlxApartment::all('location')->groupBy('location')->toArray();
-            Cache::put('location', $location);
-        }
 
         return array_keys($location);
     }
@@ -49,18 +52,14 @@ class MyFunc
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public static function getToken()
+    public static function getToken(): array
     {
-        $token = DB::table('personal_access_tokens')->where('tokenable_id', '=', Auth::id())->select('token')->get();
-        if (count($token) > 0) {
-            $token = $token[0]->token;
-        } else {
-            $token = Auth::user()->createToken('API TOKEN')->plainTextToken;
-        }
+        $token =Auth::user()->createToken(Auth::user()->name);
 
-        return $token;
+        return ['token' => $token->plainTextToken];
+
     }
 
     /**

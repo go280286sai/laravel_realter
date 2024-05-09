@@ -9,6 +9,8 @@ use App\Http\Controllers\User\ResearchController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsAuthUser;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
