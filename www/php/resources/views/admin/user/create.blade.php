@@ -1,23 +1,16 @@
 @extends('admin.layout.layouts')
-
 @section('style')
-
 @endsection
-
 @section('text')
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Добавить пользователя
       </h1>
     </section>
-    <!-- Main content -->
     <section class="content">
-        <form action="{{env('APP_URL').'/user/users'}}" method="post">
+        <form action="{{url('/user/users')}}" method="post">
             @csrf
-      <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
           @include('admin.errors')
@@ -72,30 +65,22 @@
         <!-- /.box-body -->
         <div class="box-footer">
             <div class="form-group">
-                <a href="{{env('APP_URL').'/user/users'}}" class="btn btn-danger">Назад</a>
+                <a href="{{url('/user/users')}}" class="btn btn-danger">Назад</a>
             </div>
           <button class="btn btn-success pull-right">Добавить</button>
         </div>
-        <!-- /.box-footer-->
       </div>
-      <!-- /.box -->
         </form>
     </section>
-    <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
 @endsection
-
 @section('js')
   <script>
     $(function () {
-      //Initialize Select2 Elements
       $(".select2").select2();
-      //Date picker
       $('#datepicker').datepicker({
         autoclose: true
       });
-      //iCheck for checkbox and radio inputs
       $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
         checkboxClass: 'icheckbox_minimal-blue',
         radioClass: 'iradio_minimal-blue'

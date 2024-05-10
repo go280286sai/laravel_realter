@@ -38,8 +38,15 @@
                                     <option value="{{$item}}" >{{$item}}</option>
                                 @endforeach
                             </select>
+                            @if(isset($service->id))
+                                <input type="hidden" name="service_id"  value="{{$service->id}}">
+                            @endif
+
                             <br>
-                            <label for="location">Contact</label>
+                            @if($client)
+                                <input type="hidden" id="client_id" name="client_id"  value="{{$client->id}}">
+                            @else
+                                <label for="location">Contact</label>
                             <br>
                             <select id="client_id" name="client_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                                 <option selected>{{old('client_id')??'Контакт'}}</option>
@@ -49,6 +56,7 @@
                                 @endforeach
                             </select>
                             <br>
+                            @endif
                             <p id="predict_result">Для предварительной оценки, заполните поля выше и нажмите кнопку </p>
 
                            <input type="button" wire:click="getPredict" class="form-control btn-danger" value="Предварительная оценка"> <br>
@@ -65,7 +73,7 @@
                     <input type="submit" class="btn btn-success pull-right"
                            value="Добавить">
                     <div class="form-group">
-                        <a href="{{env('APP_URL').'/user/apartment'}}" class="btn btn-danger">Назад</a>
+                        <a href="{{url('/user/apartment')}}" class="btn btn-danger">Назад</a>
                     </div>
                 </div>
             </form>

@@ -9,8 +9,6 @@ use App\Http\Controllers\User\ResearchController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsAuthUser;
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,8 +21,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/test', '\App\Http\Controllers\TestController@index');
-
 Route::get('/', function () {
     return view('front.pages.index');
 })->name('main');
@@ -35,7 +31,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return redirect('/user/dashboard');
     })->name('dashboard');
 });
 Route::group(['prefix' => 'user', 'middleware' => IsAuthUser::class], function () {

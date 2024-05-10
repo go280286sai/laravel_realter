@@ -3,9 +3,6 @@
 namespace App\Livewire;
 
 use App\Func\MyFunc;
-use App\Http\Controllers\User\OlxApartmentController;
-use App\Http\Controllers\User\ResearchController;
-use App\Jobs\OlxApartmentJob;
 use App\Models\OlxApartment;
 use App\Models\Rate;
 use App\Models\Research;
@@ -13,39 +10,39 @@ use App\Models\Setting;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Js;
 use Livewire\Component;
 
 class MainOlxModel extends Component
 {
-
     public object $OlxApartment;
-    public ?object $resource = null;
-    public float $rate;
-    public string $token;
-    public string $url = '';
-    public bool $status_sync = false;
-    public int $time = 0;
-    public ?string $mae="0";
 
+    public ?object $resource = null;
+
+    public float $rate;
+
+    public string $token;
+
+    public string $url = '';
+
+    public bool $status_sync = false;
+
+    public int $time = 0;
+
+    public ?string $mae = '0';
 
     public function mount(): void
     {
         $this->getRateDollor();
         $this->resource = Research::find(1);
         $this->url = $this->resource->url;
-        $this->OlxApartment = OlxApartment::all()->sortByDesc('date');
+        $this->OlxApartment = OlxApartment::all()->sortByDesc('created_at');
         $this->rate = MyFunc::getDollar();
         $this->token = MyFunc::getToken()['token'];
-//        $this->mae=Setting::all()->first()?->MAE;
+        $this->mae = Setting::all()->first()?->MAE;
 
     }
-
 
     public function getRateDollor(): void
     {
@@ -63,9 +60,9 @@ class MainOlxModel extends Component
     {
         try {
             Research::edit(['url' => $this->url, 'id' => $this->resource->id]);
-            $this->js("window.location.reload();");
+            $this->js('window.location.reload();');
         } catch (Exception $e) {
-            Log::info("Error: " . $e->getMessage() . ' Line: ' . $e->getLine() . ' Data: ' . date());
+            Log::info('Error: '.$e->getMessage().' Line: '.$e->getLine().' Data: '.date('Y-m-d H:i:s'));
         }
     }
 
@@ -73,11 +70,11 @@ class MainOlxModel extends Component
     {
         $data = time();
         if ($this->time == 0 || $data - $this->time > 1800) {
-            $host = env('URL_NODE') . '/api/target';
-            $req = Http::post($host, ["target" => "realter",
-                "url" => $this->url]);
+            $host = env('URL_NODE').'/api/target';
+            $req = Http::post($host, ['target' => 'realter',
+                'url' => $this->url]);
             $status = $req->status();
-            $this->js("alert('" . $status . "')");
+            $this->js("alert('".$status."')");
             $this->time = $data;
         } else {
             $this->js("alert('request is too fast')");
@@ -89,12 +86,12 @@ class MainOlxModel extends Component
         $data = time();
         if ($this->time != 0 && $data - $this->time > 1800) {
             for ($i = 0; $i < 25; $i++) {
-                $research = Http::get('http:/192.168.50.70:3000/api/realter/' . $i)->body();
+                $research = Http::get('http:/192.168.50.70:3000/api/realter/'.$i)->body();
                 $items = json_decode($research);
                 foreach ($items as $item) {
                     try {
                         $data = [
-                            'title' => html_entity_decode($item->title, ENT_QUOTES, "UTF-8"),
+                            'title' => html_entity_decode($item->title, ENT_QUOTES, 'UTF-8'),
                             'url' => $item->url,
                             'rooms' => $item->room,
                             'floor' => $item->floor,
@@ -102,14 +99,14 @@ class MainOlxModel extends Component
                             'area' => $item->area,
                             'price' => $item->price,
                             'type' => $item->type,
-                            'description' => html_entity_decode($item->description, ENT_QUOTES, "UTF-8"),
+                            'description' => html_entity_decode($item->description, ENT_QUOTES, 'UTF-8'),
                             'date' => OlxApartment::getDateNew($item->time_),
-                            'location' => OlxApartment::location($item->location)
+                            'location' => OlxApartment::location($item->location),
                         ];
 
                         OlxApartment::add($data);
                     } catch (Exception $exception) {
-                        Log::info($exception->getMessage() . ' Line: ' . $exception->getLine() . ' Data: ' . date('Y-m-d H:i:s'));
+                        Log::info($exception->getMessage().' Line: '.$exception->getLine().' Data: '.date('Y-m-d H:i:s'));
                     }
 
                 }
@@ -117,7 +114,7 @@ class MainOlxModel extends Component
         } else {
             $this->js("alert('Система занята. Попробуйте позже.')");
         }
-        $this->js("window.location.reload();");
+        $this->js('window.location.reload();');
     }
 
     public function cleanAll(): void
@@ -125,21 +122,17 @@ class MainOlxModel extends Component
         OlxApartment::cleanBase();
     }
 
-    /**
-     * @return void
-     */
     public function runSync(): void
     {
         try {
             Http::post('http://192.168.50.70:5000/apartment', ['token' => $this->token]);
-        }catch (Exception $exception){
-       Log::info('Error: ' . $exception->getMessage() . ' Line: ' . $exception->getLine() . ' Data: ' . date('Y-m-d H:i:s'));
+        } catch (Exception $exception) {
+            Log::info('Error: '.$exception->getMessage().' Line: '.$exception->getLine().' Data: '.date('Y-m-d H:i:s'));
         }
     }
 
-    public function render()
+    public function render(): View
     {
-
         return view('livewire.main-olx-model',
             ['apartments' => $this->OlxApartment, 'rate' => $this->rate, 'token' => $this->token,
                 'status_sync' => $this->status_sync, 'mae' => $this->mae]);

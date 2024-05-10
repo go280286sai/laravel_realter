@@ -5,17 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\OlxApartment;
 use App\Models\Setting;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return void
-     */
     public function getFiles(Request $request): void
     {
         try {
@@ -28,18 +23,14 @@ class ApiController extends Controller
         }
     }
 
-    /**
-     * @param Request $request
-     * @return void
-     */
     public function getMae(Request $request): void
     {
         try {
             $value = $request->json('mae');
             Setting::addSetting(['name' => 'mae', 'text' => $value]);
             Log::info('AddSetting:'.Auth::id());
-        }catch (\Exception $e) {
-            Log::info('Error AddSetting:'.Auth::id());
+        } catch (\Exception $e) {
+            Log::info('Error AddSetting:'.Auth::id().' '.$e->getMessage().' Date'.date('Y-m-d H:i:s'));
         }
     }
 }

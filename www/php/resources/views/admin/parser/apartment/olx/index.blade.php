@@ -1,12 +1,10 @@
 @extends('admin.layout.layouts')
-
 @section('style')
     <link rel="stylesheet" href="{{asset('/assets/plugins/datatables/dataTables.bootstrap.css')}}">
 @endsection
 @section('text')
    <livewire:main-olx-model />
 @endsection
-
 @section('js')
     <script src="{{asset('/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>

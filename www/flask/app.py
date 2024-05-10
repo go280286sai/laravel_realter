@@ -18,7 +18,7 @@ from apps.apartment.RandomForest import RandomForest
 from dotenv import load_dotenv
 
 load_dotenv()
-CORS(app, resources={r"/*": {"origins": "http://192.168.50.70/"}})
+CORS(app, resources={r"/*": {"origins": "http://192.168.50.70:8080/"}})
 
 
 @app.get('/')
@@ -80,19 +80,19 @@ def sendMae(mae: float, token: str):
 
 
 @app.post('/getPredict')
-def getPredict():
-    get_data = request.body.decode('utf-8')
-    get_body = json.loads(get_data)
-    rooms = get_body['rooms']
-    etajnost = get_body['etajnost']
-    price = get_body['price']
-    location = get_body['location']
+def get_predict():
+    body = request.get_json()
+    print(body)
+    rooms = body['rooms']
+    etajnost = body['etajnost']
+    price = body['price']
+    location = body['location']
     data = pd.DataFrame(OlxApartment().getData(),
                         columns=['id', 'rooms', 'floor', 'etajnost', 'price', 'date', 'location', 'area',
                                  'favorites'])
-    result = PredictListApartment(data).getData([rooms, etajnost, price, location])
+    result = PredictListApartment(data).getData([int(rooms), int(etajnost), int(price), location])
+    return jsonify({"ids": result})
 
-    return jsonify(json.dumps(result))
 
 
 if __name__ == '__main__':

@@ -57,12 +57,7 @@ class DocumentController extends Controller
      */
     public function show(string $id): View
     {
-        $doc = Document::find($id);
-        $contacts = Client::all();
-        $location = MyFunc::getLocation();
-        $service = Service::all();
-
-        return view('admin.document.show', ['doc' => $doc, 'service' => $service, 'contacts' => $contacts, 'loc' => $location]);
+        return view('admin.document.show', ['id' => $id]);
     }
 
     /**
@@ -106,10 +101,6 @@ class DocumentController extends Controller
         return redirect('/user/documents');
     }
 
-    /**
-     * @param string $id
-     * @return View
-     */
     public function comment(string $id): View
     {
         $object = Document::find($id);
@@ -117,10 +108,6 @@ class DocumentController extends Controller
         return view('admin.document.comment', ['object' => $object]);
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function addComment(Request $request): RedirectResponse
     {
         $fields = MyFunc::stripTags($request->all());

@@ -13,7 +13,9 @@ class Research extends Model
      * @var string[]
      */
     protected $fillable = ['name', 'url'];
+
     protected $table = 'research';
+
     public static function add($fields): void
     {
         $data = new self();
@@ -21,14 +23,10 @@ class Research extends Model
         $data->save();
     }
 
-    /**
-     * @param array $fields
-     * @return void
-     */
     public static function edit(array $fields): void
     {
         $data = self::find($fields['id']);
-        $data->url=$fields['url'];
+        $data->url = $fields['url'];
         $data->save();
     }
 }

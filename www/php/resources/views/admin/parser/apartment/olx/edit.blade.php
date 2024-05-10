@@ -1,5 +1,4 @@
 @extends('admin.layout.layouts')
-
 @section('style')
 @endsection
 @section('text')
@@ -11,7 +10,7 @@
         </section>
         <section class="content">
             <div class="box" id="create_apartment">
-                <form action="{{env('APP_URL').'/user/edit'}}" method="post">
+                <form action="{{url('/user/edit')}}" method="post">
                     <div class="box-header with-border">
                         @include('admin.errors')
                     </div>
@@ -20,21 +19,27 @@
                             <div class="form-group">
                                 @csrf
                                 <label for="title">Название</label>
-                                <input type="text" id="title" name="title" class="form-control" value="{{$apartment->title}}">
+                                <input type="text" id="title" name="title" class="form-control"
+                                       value="{{$apartment->title}}">
                                 <label for="rooms">Количество комнат</label>
-                                <input type="number" id="rooms" name="rooms" class="form-control" value="{{$apartment->rooms}}">
+                                <input type="number" id="rooms" name="rooms" class="form-control"
+                                       value="{{$apartment->rooms}}">
                                 <label for="floor">Этаж</label>
-                                <input type="number" id="floor" name="floor" class="form-control" value="{{$apartment->floor}}">
+                                <input type="number" id="floor" name="floor" class="form-control"
+                                       value="{{$apartment->floor}}">
                                 <label for="etajnost">Этажность</label>
-                                <input type="number" id="etajnost" name="etajnost" class="form-control" value="{{$apartment->etajnost}}">
+                                <input type="number" id="etajnost" name="etajnost" class="form-control"
+                                       value="{{$apartment->etajnost}}">
                                 <label for="area">Площадь</label>
-                                <input type="number" id="area" name="area" class="form-control" value="{{$apartment->area}}">
+                                <input type="number" id="area" name="area" class="form-control"
+                                       value="{{$apartment->area}}">
                                 <label for="location">Расположение</label>
                                 <br>
-                                <select id="location" name="location" value="{{$apartment->location}}" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                <select id="location" name="location" value="{{$apartment->location}}"
+                                        class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                                     <option selected>{{$apartment->location}}</option>
                                     @foreach($loc as $item)
-                                       {{$item}}
+                                        {{$item}}
                                         <option value="{{$item}}">{{$item}}</option>
                                     @endforeach
                                 </select>
@@ -42,8 +47,10 @@
                                 <label for="location">Contact</label>
                                 <br>
                                 @if($contact!=null)
-                                    <select id="url" name="url" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                        <option value="{{$contact->id}}" selected> {{$contact->last_name.' '.$contact->first_name.' '.$contact->surname}}</option>
+                                    <select id="url" name="url" class="form-select form-select-lg mb-3"
+                                            aria-label=".form-select-lg example">
+                                        <option value="{{$contact->id}}"
+                                                selected> {{$contact->last_name.' '.$contact->first_name.' '.$contact->surname}}</option>
                                         @foreach($contacts as $item)
                                             {{$item->last_name.' '.$item->first_name}}
                                             <option value="{{$item->id}}">{{$item->last_name.' '.$item->first_name.' '.$item->surname}}</option>
@@ -55,17 +62,22 @@
 
                                 <br>
                                 <label for="price">Цена, грн.</label>
-                                <input type="number" id="price" name="price" class="form-control" value="{{$apartment->price}}">
+                                <input type="number" id="price" name="price" class="form-control"
+                                       value="{{$apartment->price}}">
                                 <input type="hidden" name="id" value="{{$apartment->id}}">
                                 <br>
                                 <label for="title">Описание</label>
-                                <textarea id="description" cols="30" name="description" rows="10" class="form-control">{{$apartment->description}}</textarea>
+                                <textarea id="description" cols="30" name="description" rows="10"
+                                          class="form-control">{{$apartment->description}}</textarea>
                             </div>
                         </div>
                     </div>
                     <div class="box-footer">
                         <input type="submit" class="btn btn-success pull-right"
-                               value="Send"><button class="mr-3 bg-orange-600 hover:bg-orange-300 text-white btn" onclick="window.history.back()">Back</button>
+                               value="Send">
+                        <button class="mr-3 bg-orange-600 hover:bg-orange-300 text-white btn"
+                                onclick="window.history.back()">Back
+                        </button>
                     </div>
                 </form>
             </div>
@@ -74,8 +86,8 @@
 @endsection
 
 @section('js')
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
             crossorigin="anonymous"></script>

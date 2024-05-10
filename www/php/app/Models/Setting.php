@@ -25,6 +25,6 @@ class Setting extends Model
     {
         $obj = self::find(1);
 
-        return $obj->MAE??null;
+        return $obj->MAE ?? null;
     }
 }

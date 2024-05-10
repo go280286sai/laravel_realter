@@ -22,8 +22,8 @@ class PredictListApartment(Olx):
         label = data_predict['label'].values[0]
         get_id = df[df['label'] == label]['id']
         get_id = get_id.reset_index(drop=True)
-        get_array = []
+        get_array = ''
         for i in range(0, len(get_id)):
-            get_array.append(get_id.loc[i])
-            get_array.append(',')
-        return get_array
+            get_array = get_array + str(get_id.loc[i])+','
+            # get_array.append(',')
+        return get_array[:-1]

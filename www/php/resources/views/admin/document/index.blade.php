@@ -1,7 +1,7 @@
 @extends('admin.layout.layouts')
 
 @section('style')
-    <link rel="stylesheet" href="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.css'}}">
+    <link rel="stylesheet" href="{{asset('/assets/plugins/datatables/dataTables.bootstrap.css')}}">
 @endsection
 @section('text')
     <div class="content-wrapper">
@@ -17,7 +17,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <a class="btn btn-success" href="{{env('APP_URL').'/user/documents/create'}}">Создать
+                                    <a class="btn btn-success" href="{{url('/user/documents/create')}}">Создать
                                         заявку</a>
                                 </td>
                             </tr>
@@ -43,7 +43,7 @@
                         @foreach($docs as $doc)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td><a href="{{env('APP_URL').'/user/client/'.$doc->client->id}}"
+                                <td><a href="{{url('/user/client/'.$doc->client->id)}}"
                                        target="_blank">{{$doc->client->last_name.' '.$doc->client->first_name.' '.$doc->client->surname}}</a>
                                 </td>
                                 <td>{{$doc->service->service}}</td>
@@ -57,7 +57,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <form action="{{env('APP_URL').'/user/documents/'.$doc->id.'/edit'}}"
+                                                <form action="{{url('/user/documents/'.$doc->id.'/edit')}}"
                                                       method="get">
                                                     @csrf
                                                     <button class="btn"
@@ -65,7 +65,7 @@
                                                 </form>
                                             </td>
                                             <td>
-                                                <form action="{{env('APP_URL').'/user/document_comment/'.$doc->id}}"
+                                                <form action="{{url('/user/document_comment/'.$doc->id)}}"
                                                       method="get">
                                                     <button class="btn" title="Добавить комментарий"><i
                                                             class="fa fa-bars"></i>
@@ -75,19 +75,19 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <form action="{{env('APP_URL').'/user/documents/'.$doc->id}}"
+                                                <form action="{{url('/user/documents/'.$doc->id)}}"
                                                       method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button onclick="return confirm('{{__('messages.are_you_sure')}}')"
+                                                    <button onclick="return confirm('Вы уверены?')"
                                                             class="btn"
-                                                            title="{{__('messages.delete')}}"><i
+                                                            title="Удалить"><i
                                                             class="fa fa-trash"></i></button>
                                                 </form>
                                             </td>
 
                                             <td>
-                                                <form action="{{env('APP_URL').'/user/documents/'.$doc->id}}"
+                                                <form action="{{url('/user/documents/'.$doc->id)}}"
                                                       method="get">
                                                     <button class="btn"
                                                             title="Просмотреть"><i
@@ -107,8 +107,8 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
             crossorigin="anonymous"></script>

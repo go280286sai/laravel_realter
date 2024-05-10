@@ -71,10 +71,6 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * @param string $field
-     * @return void
-     */
     public static function setToken(string $field): void
     {
         $obj = self::find(Auth::user()->id);
@@ -82,18 +78,11 @@ class User extends Authenticatable
         $obj->save();
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function gender(): BelongsTo
     {
         return $this->belongsTo(Gender::class);
     }
 
-    /**
-     * @param array $fields
-     * @return void
-     */
     public static function add_comment_user(array $fields): void
     {
         $object = self::find($fields['id']);
@@ -101,10 +90,6 @@ class User extends Authenticatable
         $object->save();
     }
 
-    /**
-     * @param array $fields
-     * @return void
-     */
     public static function add(array $fields): void
     {
         $object = new self();
@@ -113,35 +98,22 @@ class User extends Authenticatable
         $object->save();
     }
 
-    /**
-     * @param array $fields
-     * @param string $id
-     * @return void
-     */
     public static function edit(array $fields, string $id): void
     {
         $object = self::find($id);
         $object->fill($fields);
-        if (!is_null($fields['password'])) {
+        if (! is_null($fields['password'])) {
             $object->password = bcrypt($fields['password']);
         }
         $object->save();
     }
 
-    /**
-     * @param string $id
-     * @return void
-     */
     public static function remove(string $id): void
     {
         $object = self::find($id);
         $object->delete();
     }
 
-    /**
-     * @param $image
-     * @return void
-     */
     public static function updateProfilePhotoUser($image): void
     {
         if ($image != null) {
@@ -153,9 +125,7 @@ class User extends Authenticatable
             $user->save();
         }
     }
-    /**
-     * @return string
-     */
+
     public function getAvatar(): string
     {
         if ($this->profile_photo_path == null) {
@@ -164,6 +134,4 @@ class User extends Authenticatable
 
         return '/'.$this->profile_photo_path;
     }
-
-
 }

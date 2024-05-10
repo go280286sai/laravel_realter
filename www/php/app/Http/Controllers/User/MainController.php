@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
-    /**
-     * @return View
-     */
     public function index(): View
     {
         AddCurrentRateJob::dispatch();
@@ -32,10 +29,6 @@ class MainController extends Controller
         return view('admin.user.dashboard', ['group' => $group, 'rate' => $rate, 'user' => $user]);
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();

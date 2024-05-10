@@ -1,8 +1,6 @@
 @extends('admin.layout.layouts')
-
 @section('style')
 @endsection
-<script src="https://unpkg.com/vue@next"></script>
 @section('text')
     <div class="content-wrapper">
         <section class="content-header">
@@ -12,7 +10,7 @@
         </section>
         <section class="content">
             <div class="box" id="create_apartment">
-                <form action="{{env('APP_URL').'/user/documents'}}" method="post">
+                <form action="{{url('/user/documents')}}" method="post">
                     <div class="box-header with-border">
                         @include('admin.errors')
                     </div>
@@ -68,19 +66,13 @@
                         </div>
                     </div>
                 </form>
-
-
                 <input type="hidden" id="getEmail" value="{{$client->email}}" />
-
                 <div id="body"></div>
-
             </div>
         </section>
     </div>
 @endsection
-
 @section('js')
-    @vite('resources/js/app.jsx');
     <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
     <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -101,5 +93,4 @@
             });
         });
     </script>
-
 @endsection

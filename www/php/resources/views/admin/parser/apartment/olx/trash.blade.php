@@ -1,8 +1,6 @@
 @extends('admin.layout.layouts')
-
 @section('style')
 @endsection
-
 @section('text')
     <div class="content-wrapper">
         <section class="content-header">
@@ -17,17 +15,19 @@
                         <table>
                             <tr>
                                 <td>
-                                    <form action="{{env('APP_URL').'/user/olx_apartment_recovery_all'}}" method="get">
+                                    <form action="{{url('/user/olx_apartment_recovery_all')}}" method="get">
                                         <button title="Восстановить все?"
                                                 onclick="return confirm('Вы уверенны?')"
-                                                class="mr-3 bg-orange-600 hover:bg-orange-300 text-white btn"><i>Восстановить все</i></button>
+                                                class="mr-3 bg-orange-600 hover:bg-orange-300 text-white btn"><i>Восстановить
+                                                все</i></button>
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="{{env('APP_URL').'/user/olx_apartment_delete_all'}}" method="get">
+                                    <form action="{{url('/user/olx_apartment_delete_all')}}" method="get">
                                         <button title="Удалить все?"
                                                 onclick="return confirm('Вы уверенны?')"
-                                                class="mr-3 bg-orange-600 hover:bg-orange-300 text-white btn"><i>Удалить все</i>
+                                                class="mr-3 bg-orange-600 hover:bg-orange-300 text-white btn"><i>Удалить
+                                                все</i>
                                         </button>
                                     </form>
                                 </td>
@@ -59,13 +59,13 @@
                                     {{\Illuminate\Support\Str::substr($item->description, 0, 200)}}
                                 </td>
                                 <td>
-                                    <form action="{{env('APP_URL').'/user/olx_apartment_recovery_item/'.$item->id}}" method="get">
+                                    <form action="{{url('/user/olx_apartment_recovery_item/'.$item->id)}}" method="get">
                                         <button title="Восстановить сообщение?"
                                                 onclick="return confirm('Вы уверенны?')"
                                                 class="btn"><i
                                                 class="fa fa-bars"></i></button>
                                     </form>
-                                    <form action="{{env('APP_URL').'/user/olx_apartment_delete_item/'.$item->id}}" method="post">
+                                    <form action="{{url('/user/olx_apartment_delete_item/'.$item->id)}}" method="post">
                                         <button title="Удалить сообщение?"
                                                 onclick="return confirm('Вы уверенны?')"
                                                 class="btn"><i
@@ -78,7 +78,7 @@
                 </div>
                 <div class="box-footer">
                     <div class="form-group">
-                        <a href="{{env('APP_URL').'/user/apartment'}}" class="btn btn-danger">Назад</a>
+                        <a href="{{url('/user/apartment')}}" class="btn btn-danger">Назад</a>
                     </div>
                 </div>
             </div>

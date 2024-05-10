@@ -1,9 +1,6 @@
 @extends('admin.layout.layouts')
-
 @section('style')
-
 @endsection
-
 @section('text')
     <div class="content-wrapper">
         <section class="content-header">

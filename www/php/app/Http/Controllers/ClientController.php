@@ -112,10 +112,6 @@ class ClientController extends Controller
         return view('admin.client.comment', ['comment' => $comment]);
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function comment_add(Request $request): RedirectResponse
     {
         $object = MyFunc::stripTags($request->all());
@@ -150,11 +146,6 @@ class ClientController extends Controller
         return redirect('/user/client');
     }
 
-    /**
-     * @param string $client_id
-     * @param string $service_id
-     * @return View
-     */
     public function addBuy(string $client_id, string $service_id): View
     {
         $contacts = Client::find($client_id);
@@ -168,11 +159,6 @@ class ClientController extends Controller
         ]);
     }
 
-    /**
-     * @param string $client_id
-     * @param string $service_id
-     * @return View
-     */
     public function addSell(string $client_id, string $service_id): View
     {
         $contacts = Client::find($client_id);
@@ -188,10 +174,6 @@ class ClientController extends Controller
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function createSell(Request $request): RedirectResponse
     {
         $request->validate([

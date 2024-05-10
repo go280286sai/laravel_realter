@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>{{$title??'Parser'}}</title>
-    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- My style CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/my_css.css')}}">
@@ -48,7 +47,7 @@
         <nav class="navbar navbar-fixed-top">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"
-               title="{{__('messages.hide_show')}}">
+               title="">
                 <span class="sr-only"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -70,11 +69,11 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{env('APP_URL').'/user/profile'}}"
+                                    <a href="{{url('/user/profile')}}"
                                        class="btn btn-default btn-flat">{{__('messages.profile')}}</a>
                                 </div>
                                 <div class="pull-right">
-                                    <form action="{{env('APP_URL').'/user/exit'}}" method="get">
+                                    <form action="{{url('/user/exit')}}" method="get">
                                         <input type="submit" class="btn btn-default btn-flat" name="submit"
                                                value="{{__('messages.logout')}}">
                                     </form>
@@ -88,16 +87,15 @@
             </div>
         </nav>
     </header>
-
-    <!-- Left side column. contains the sidebar -->
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{\Illuminate\Support\Facades\Storage::url(\Illuminate\Support\Facades\Auth::user()->profile_photo_path)}}"
-                         class="logo_mini" alt="User Image">
+                    <img
+                        src="{{\Illuminate\Support\Facades\Storage::url(\Illuminate\Support\Facades\Auth::user()->profile_photo_path)}}"
+                        class="logo_mini" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{\Illuminate\Support\Facades\Auth::user()->name}}</p>
@@ -119,7 +117,8 @@
                 <li class="header">MAIN NAVIGATION</li>
                 <li><a href="{{url('/user/dashboard')}}"><i class="fa fa-dashboard"></i>
                         <span>Админ-панель</span></a></li>
-                <li><a href="{{url('/user/apartment')}}"><i class="fa fa-sticky-note-o"></i> <span>Недвижимость</span></a>
+                <li><a href="{{url('/user/apartment')}}"><i class="fa fa-sticky-note-o"></i>
+                        <span>Недвижимость</span></a>
                 </li>
                 <li><a href="{{url('/user/client')}}"><i class="fa fa-user-circle"></i>
                         <span>Клиенты</span></a></li>
@@ -149,12 +148,6 @@
         All rights
         reserved.
     </footer>
-
-    <!-- Control Sidebar -->
-
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
 

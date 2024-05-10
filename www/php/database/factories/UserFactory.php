@@ -14,7 +14,6 @@ use Laravel\Jetstream\Features;
  */
 class UserFactory extends Factory
 {
-
     /**
      * The current password being used by the factory.
      */
@@ -37,7 +36,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => fake()->url(),
             'current_team_id' => null,
-            'is_admin' => 1
+            'is_admin' => 1,
         ];
     }
 
@@ -54,7 +53,7 @@ class UserFactory extends Factory
     /**
      * Indicate that the user should have a personal team.
      */
-    public function withPersonalTeam(callable $callback = null): static
+    public function withPersonalTeam(?callable $callback = null): static
     {
         if (! Features::hasTeamFeatures()) {
             return $this->state([]);

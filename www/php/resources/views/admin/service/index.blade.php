@@ -1,8 +1,7 @@
 @extends('admin.layout.layouts')
 
 @section('style')
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.css'}}">
+    <link rel="stylesheet" href="{{asset('/assets/plugins/datatables/dataTables.bootstrap.css')}}">
 @endsection
 
 @section('text')
@@ -12,14 +11,11 @@
                 Услуги
             </h1>
         </section>
-        <!-- Main content -->
         <section class="content">
-            <!-- Default box -->
             <div class="box">
-                <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <a href="{{env('APP_URL').'/user/service/create'}}"
+                        <a href="{{url('/user/service/create')}}"
                            class="btn btn-success">Добавить</a>
                     </div>
                     <table id="example1" class="table table-bordered table-striped">
@@ -37,11 +33,11 @@
                                 <td>{{$item->service}}
                                 </td>
                                 <td>
-                                    <form action="{{env('APP_URL').'/user/service/'.$item->id.'/edit/'}}" method="get">
+                                    <form action="{{url('/user/service/'.$item->id.'/edit/')}}" method="get">
                                         <button type="submit" title="Редактировать" class="btn"><i
-                                                class="fa fa-bars"></i></button>
+                                                    class="fa fa-bars"></i></button>
                                     </form>
-                                    <form action="{{env('APP_URL').'/user/service/'.$item->id}}" method="post">
+                                    <form action="{{url('/user/service/'.$item->id)}}" method="post">
                                         @method('DELETE')
                                         @csrf
                                         <button title="Удалить" type="submit" class="btn"><i class="fa fa-trash"></i>
@@ -52,18 +48,14 @@
                         @endforeach
                     </table>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         </section>
-        <!-- /.content -->
     </div>
 @endsection
 
 @section('js')
-    <!-- DataTables -->
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
     <!-- page script -->
     <script>
         $(function () {

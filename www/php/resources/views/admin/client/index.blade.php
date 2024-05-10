@@ -1,23 +1,16 @@
 @extends('admin.layout.layouts')
-
 @section('style')
-    <link rel="stylesheet" href="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.css'}}">
+    <link rel="stylesheet" href="{{asset('/assets/plugins/datatables/dataTables.bootstrap.css')}}">
 @endsection
-
 @section('text')
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
                 Список клиентов
             </h1>
         </section>
-        <!-- Main content -->
         <section class="content">
-            <!-- Default box -->
             <div class="box">
-                <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
                         <a href="{{env('APP_URL').'/user/client/create'}}" class="btn btn-success">Добавить клиента</a>
@@ -49,25 +42,25 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <form action="{{env('APP_URL').'/user/add_buy/'.$client->id.'/1'}}"
+                                                <form action="{{url('/user/add_buy/'.$client->id.'/1')}}"
                                                       method="get">
                                                     <button class="btn" title="Купить"><i class="fa fa-dollar"></i>
                                                     </button>
                                                 </form>
-                                                <form action="{{env('APP_URL').'/user/add_sell/'.$client->id.'/2'}}"
+                                                <form action="{{url('/user/add_sell/'.$client->id.'/2')}}"
                                                       method="get">
                                                     <button class="btn" title="Продать"><i class="fa fa-money"></i>
                                                     </button>
                                                 </form>
                                             </td>
                                             <td>
-                                                <form action="{{env('APP_URL').'/user/client/'.$client->id.'/edit'}}"
+                                                <form action="{{url('/user/client/'.$client->id.'/edit')}}"
                                                       method="get">
                                                     @csrf
                                                     <button class="btn" title="Редактировать"><i class="fa fa-bars"></i>
                                                     </button>
                                                 </form>
-                                                <form action="{{env('APP_URL').'/user/client/'.$client->id}}"
+                                                <form action="{{url('/user/client/'.$client->id)}}"
                                                       method="post">
                                                     @csrf
                                                     @method('DELETE')
@@ -80,13 +73,13 @@
                                     </table>
                                 </td>
                                 <td>
-                                    <form action="{{env('APP_URL').'/user/createMessageClient/'.$client->id}}"
+                                    <form action="{{url('/user/createMessageClient/'.$client->id)}}"
                                           method="get">
                                         @csrf
                                         <button class="btn" title="Отправить сообщение"><i
                                                 class="fa fa-mail-forward"></i></button>
                                     </form>
-                                    <form action="{{env('APP_URL').'/user/client_comment/'.$client->id}}" method="get">
+                                    <form action="{{url('/user/client_comment/'.$client->id)}}" method="get">
                                         <button class="btn" title="Добавить комментарий"><i
                                                 class="fa fa-comment"></i></button>
                                     </form>
@@ -96,18 +89,14 @@
                         @endforeach
                     </table>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 @endsection
 
 @section('js')
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
     <script>
         $(function () {
             $("#example1").DataTable();

@@ -1,6 +1,6 @@
 @extends('admin.layout.layouts')
 @section('style')
-    <link rel="stylesheet" href="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.css'}}">
+    <link rel="stylesheet" href="{{asset('/assets/plugins/datatables/dataTables.bootstrap.css')}}">
 @endsection
 @section('text')
     <div class="content-wrapper">
@@ -51,8 +51,8 @@
     </div>
 @endsection
 @section('js')
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
             crossorigin="anonymous"></script>

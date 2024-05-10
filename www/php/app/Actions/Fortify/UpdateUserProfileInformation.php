@@ -19,7 +19,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)]
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -29,8 +29,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
-        }
-        else {
+        } else {
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
@@ -51,6 +50,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'email_verified_at' => null,
         ])->save();
 
-//        $user->sendEmailVerificationNotification();
+        //        $user->sendEmailVerificationNotification();
     }
 }

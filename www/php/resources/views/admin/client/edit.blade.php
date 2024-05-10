@@ -1,23 +1,17 @@
 @extends('admin.layout.layouts')
 @section('style')
-
 @endsection
-
 @section('text')
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
                 Редактировать клиента
             </h1>
         </section>
-        <!-- Main content -->
         <section class="content">
-            <form action="{{env('APP_URL').'/user/client/'.$client->id}}" method="post">
+            <form action="{{url('/user/client/'.$client->id)}}" method="post">
                 @csrf
                 @method('PUT')
-                <!-- Default box -->
                 <div class="box">
                     <div class="box-header with-border">
                         @include('admin.errors')
@@ -74,33 +68,24 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.box-body -->
                     <div class="box-footer">
                         <div class="form-group">
                             <a href="{{env('APP_URL').'/user/client'}}" class="btn btn-danger">Назад</a>
                         </div>
                         <button class="btn btn-warning pull-right">Редактировать</button>
                     </div>
-                    <!-- /.box-footer-->
                 </div>
-                <!-- /.box -->
             </form>
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 @endsection
-
 @section('js')
     <script>
         $(function () {
-            //Initialize Select2 Elements
             $(".select2").select2();
-            //Date picker
             $('#datepicker').datepicker({
                 autoclose: true
             });
-            //iCheck for checkbox and radio inputs
             $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'

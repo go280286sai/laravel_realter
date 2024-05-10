@@ -1,8 +1,6 @@
 @extends('admin.layout.layouts')
-
 @section('style')
 @endsection
-
 @section('text')
     <div class="content-wrapper">
         <section class="content-header">
@@ -12,7 +10,7 @@
         </section>
         <section class="content">
             <div class="box">
-                <form action="{{env('APP_URL').'/user/document_comment_add'}}" method="post">
+                <form action="{{url('/user/document_comment_add')}}" method="post">
                     <div class="box-header with-border">
                         @include('admin.errors')
                     </div>
@@ -28,7 +26,7 @@
                     </div>
                     <div class="box-footer">
                         <div class="form-group">
-                            <a href="{{env('APP_URL').'/user/documents'}}" class="btn btn-danger">Назад</a>
+                            <a href="{{url('/user/documents')}}" class="btn btn-danger">Назад</a>
                         </div>
                         <input type="submit" class="btn btn-success pull-right" name="submit"
                                value="Добавить">

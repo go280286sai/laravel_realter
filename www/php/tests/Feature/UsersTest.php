@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-
 use App\Http\Controllers\User\UserController;
 use App\Mail\User_email;
 use App\Models\User;
@@ -75,7 +74,7 @@ class UsersTest extends TestCase
         $this->assertTrue($response->description == 'test');
         $this->actingAs($user)
             ->withSession(['banned' => false])
-            ->put('/user/users/' . $response->id, [
+            ->put('/user/users/'.$response->id, [
                 '_token' => csrf_token(),
                 'name' => 'test2',
                 'birthday' => '2002-02-02',
@@ -116,7 +115,7 @@ class UsersTest extends TestCase
         $this->assertTrue($response->description == 'test');
         $this->actingAs($user)
             ->withSession(['banned' => false])
-            ->delete('/user/users/' . $response->id, [
+            ->delete('/user/users/'.$response->id, [
                 '_token' => csrf_token(),
             ]);
         $response = User::where('name', 'test')->first();
@@ -155,7 +154,7 @@ class UsersTest extends TestCase
     public function test_email()
     {
         Mail::fake();
-        Auth::shouldReceive('user')->andReturn((object)['email' => 'user@example.com', 'name' => 'John Doe']);
+        Auth::shouldReceive('user')->andReturn((object) ['email' => 'user@example.com', 'name' => 'John Doe']);
         Log::shouldReceive('info');
 
         $request = Request::create('/send-message', 'POST', [
@@ -170,7 +169,7 @@ class UsersTest extends TestCase
         $response = $controller->sendMessage($request);
 
         // Проверка
-        Mail::assertSent(User_email::class, function ($mail) use ($request) {
+        Mail::assertSent(User_email::class, function ($mail) {
             return $mail->hasTo('receiver@example.com') &&
                 $mail->cc[0]['address'] === 'user@example.com';
         });

@@ -34,7 +34,7 @@ class ServiceController extends Controller
     {
         Service::add($request->all());
 
-        return  redirect('/user/service');
+        return redirect('/user/service');
     }
 
     /**
@@ -62,7 +62,7 @@ class ServiceController extends Controller
     {
         Service::edit($request->all(), $id);
 
-        return  redirect('/user/service');
+        return redirect('/user/service');
     }
 
     /**
@@ -72,6 +72,6 @@ class ServiceController extends Controller
     {
         Service::remove($id);
 
-        return  redirect('/user/service');
+        return redirect('/user/service');
     }
 }

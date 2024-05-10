@@ -1,8 +1,6 @@
 @extends('admin.layout.layouts')
-
 @section('style')
 @endsection
-<script src="https://unpkg.com/vue@next"></script>
 @section('text')
     <div class="content-wrapper">
         <section class="content-header">
@@ -12,7 +10,7 @@
         </section>
         <section class="content">
             <div class="box" id="create_apartment">
-                <form action="{{env('APP_URL').'/user/documents'}}" method="post">
+                <form action="{{url('/user/documents')}}" method="post">
                     <div class="box-header with-border">
                         @include('admin.errors')
                     </div>
@@ -62,7 +60,7 @@
                         <input type="submit" class="btn btn-success pull-right"
                                value="Добавить">
                         <div class="form-group">
-                            <a href="{{env('APP_URL').'/user/documents'}}" class="btn btn-danger">Назад</a>
+                            <a href="{{url('/user/documents')}}" class="btn btn-danger">Назад</a>
                         </div>
                     </div>
                 </form>
@@ -75,8 +73,8 @@
 
 @section('js')
     @vite('resources/js/app.jsx');
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
             crossorigin="anonymous"></script>

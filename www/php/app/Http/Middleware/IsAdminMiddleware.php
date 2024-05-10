@@ -13,15 +13,13 @@ class IsAdminMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure(Request): (Response) $next
-     * @return Response|RedirectResponse
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response|RedirectResponse
     {
-        if(Auth::user()->is_admin===1){
+        if (Auth::user()->is_admin === 1) {
             return $next($request);
-        } else{
+        } else {
             return redirect('/user/dashboard');
         }
 

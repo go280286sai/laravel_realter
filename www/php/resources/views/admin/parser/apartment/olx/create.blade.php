@@ -1,18 +1,15 @@
 @extends('admin.layout.layouts')
-
 @section('style')
 @endsection
-<script src="https://unpkg.com/vue@next"></script>
 @section('text')
     <div class="content-wrapper">
-       <livewire:predict-olx-apartment-model />
-
+        <livewire:predict-olx-apartment-model/>
     </div>
 @endsection
 
 @section('js')
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
-    <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/assets/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
             crossorigin="anonymous"></script>

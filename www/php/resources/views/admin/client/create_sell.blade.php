@@ -1,78 +1,11 @@
 @extends('admin.layout.layouts')
-
 @section('style')
 @endsection
-<script src="https://unpkg.com/vue@next"></script>
 @section('text')
     <div class="content-wrapper">
-        <section class="content-header">
-            <h1>
-                Добавить объявление на продажу
-            </h1>
-        </section>
-        <section class="content">
-            <div class="box" id="create_apartment">
-                <form action="{{env('APP_URL').'/user/createSell'}}" method="post">
-                    <div class="box-header with-border">
-                        @include('admin.errors')
-                    </div>
-                    <div class="box-body">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @csrf
-                                <label for="title">Название</label>
-                                <input type="text" id="title" name="title" class="form-control" value="{{old('title')}}">
-                                <label for="rooms">Количество комнат</label>
-                                <input type="number" id="rooms" name="rooms" class="form-control" value="{{old('rooms')}}">
-                                <label for="floor">Этаж</label>
-                                <input type="number" id="floor" name="floor" class="form-control" value="{{old('floor')}}">
-                                <label for="etajnost">Этажность</label>
-                                <input type="number" id="etajnost" name="etajnost" class="form-control" value="{{old('etajnost')}}">
-                                <label for="area">Площадь</label>
-                                <input type="number" id="area" name="area" class="form-control" value="{{old('area')}}">
-                                <label for="location">Расположение</label>
-                                <br>
-                                <select id="location" name="location" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option selected>{{old('location')??'Выбрать расположение'}}</option>
-                                    @foreach($loc as $item)
-                                       {{$item}}
-                                        <option value="{{$item}}">{{$item}}</option>
-                                    @endforeach
-                                </select>
-                                <br>
-                                <label for="location">Contact</label>
-                                <br>
-                                <input type="text"  disabled="disabled" value="{{$client->last_name.' '.$client->first_name.' '.$client->surname}}">
-                                <input type="hidden" id="client_id" name="client_id"  value="{{$client->id}}">
-                                <br>
-                                <br>
-                                <input type="text"  disabled="disabled" value="{{$service->service}}">
-                                <input type="hidden" id="service_id" name="service_id"  value="{{$service->id}}">
-                                <br>
-                                <p id="predict_result">Для предварительной оценки, заполните поля выше и нажмите кнопку </p>
-                                <input type="button" v-on:click="getPredict({{$rate["dollar"]}})" id="predict" name="predict" class="form-control btn-danger" value="Предварительная оценка">
-                                <br>
-                                <label for="price">Цена, грн.</label>
-                                <input type="number" id="price" name="price" class="form-control" value="{{old('price')}}">
-                                <br>
-                                <label for="title">Описание</label>
-                                <textarea id="description" cols="30" name="description" rows="10" class="form-control">{{old('description')}}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-footer">
-                        <input type="submit" class="btn btn-success pull-right"
-                               value="Отправить">
-                        <div class="form-group">
-                            <a href="{{env('APP_URL').'/user/client'}}" class="btn btn-danger">Назад</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </section>
+       <livewire:predict-olx-apartment-model :client_id="$client" :service_id="$service"/>
     </div>
 @endsection
-
 @section('js')
     <script src="{{env('APP_URL').'/assets/plugins/datatables/jquery.dataTables.min.js'}}"></script>
     <script src="{{env('APP_URL').'/assets/plugins/datatables/dataTables.bootstrap.min.js'}}"></script>

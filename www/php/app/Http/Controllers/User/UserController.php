@@ -38,17 +38,17 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-      $validated =  $request->validate([
-            "name" => "required|string",
-            "birthday" => "nullable|date",
-            "email" => "required|string|unique:users",
-            "phone" => "required|numeric",
-            "gender_id" => "nullable|numeric",
-            "description" => "nullable|string",
-            "password" => "required|string",
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'birthday' => 'nullable|date',
+            'email' => 'required|string|unique:users',
+            'phone' => 'required|numeric',
+            'gender_id' => 'nullable|numeric',
+            'description' => 'nullable|string',
+            'password' => 'required|string',
         ]);
         $data = array_map(function ($value) {
-            if($value!=""){
+            if ($value != '') {
                 return $value;
             }
         }, $validated);
@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     public function show(string $id): void
     {
-//
+        //
     }
 
     /**
@@ -81,16 +81,16 @@ class UserController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-        $validated =  $request->validate([
-            "name" => "required|string",
-            "birthday" => "nullable|date",
-            "phone" => "required|numeric",
-            "gender_id" => "nullable|numeric",
-            "description" => "nullable|string",
-            "password" => "required|string",
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'birthday' => 'nullable|date',
+            'phone' => 'required|numeric',
+            'gender_id' => 'nullable|numeric',
+            'description' => 'nullable|string',
+            'password' => 'required|string',
         ]);
         $data = array_map(function ($value) {
-            if($value!=""){
+            if ($value != '') {
                 return $value;
             }
         }, $validated);
@@ -124,10 +124,6 @@ class UserController extends Controller
         return redirect('/user/users');
     }
 
-    /**
-     * @param int $id
-     * @return View
-     */
     public function createMessage(int $id): View
     {
         $user = User::find($id);
@@ -149,10 +145,6 @@ class UserController extends Controller
         return redirect('/user/users');
     }
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse
-     */
     public function updateProfile(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -161,6 +153,4 @@ class UserController extends Controller
 
         return redirect()->back();
     }
-
-
 }
