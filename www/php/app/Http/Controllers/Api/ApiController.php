@@ -33,4 +33,9 @@ class ApiController extends Controller
             Log::info('Error AddSetting:'.Auth::id().' '.$e->getMessage().' Date'.date('Y-m-d H:i:s'));
         }
     }
+
+    public function getInfo()
+    {
+        return view('api.info');
+    }
 }

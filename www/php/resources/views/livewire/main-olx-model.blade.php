@@ -14,6 +14,11 @@
                             <input type="text" name="url" class="form-control"
                                    aria-describedby="emailHelp" wire:model="url">
                         </div>
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                         <div class="btn btn-success mt-2 mb-2" wire:click="setUrl">Обновить</div>
                     </div>
                     <div class="form-group">
@@ -46,7 +51,7 @@
 
                                     </td>
                                     <td>
-                                        <div class="btn btn-danger">Удалить все данные</div>&nbsp;
+                                        <button class="btn btn-danger" wire:click="cleanAll">Удалить все данные</button>
                                     </td>
                                 @endif
                             </tr>

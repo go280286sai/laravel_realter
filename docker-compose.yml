@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
     web:
@@ -10,8 +10,8 @@ services:
       ports:
         - "8080:80"
       environment:
-              - NGINX_HOST=localhost
-              - NGINX_PORT=80
+        - NGINX_HOST=localhost
+        - NGINX_PORT=8080
       networks:
         - default
     learn_mysql:
@@ -26,25 +26,24 @@ services:
         - learn-db:/var/lib/mysql
       networks:
         - default
-#    flask:
-#       build: ./www/flask
-#       container_name: flask
-#       ports:
-#         - "5000:5000"
-#       volumes:
-#         - ./www/flask:/app
-#       networks:
-#         - default
-#    nodejs:
-#        build: ./www/node
-#        container_name: nodejs
-#        restart: unless-stopped
-#        ports:
-#          - "3000:3000"
-#        volumes:
-#          - ./www/node:/usr/src/app
-#        working_dir: /usr/src/app
-
+    flask:
+       build: ./www/flask
+       container_name: flask
+       ports:
+         - "5000:5000"
+       volumes:
+         - ./www/flask:/app
+       networks:
+         - default
+    nodejs:
+        build: ./www/node
+        container_name: nodejs
+        restart: unless-stopped
+        ports:
+          - "3000:3000"
+        volumes:
+          - ./www/node:/usr/src/app
+        working_dir: /usr/src/app
 networks:
   default:
     driver: bridge

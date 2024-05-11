@@ -58,7 +58,7 @@ class Realter {
     }
 
     async saveData(i) {
-        const filePath = path.join('files', 'realter', `${i}_olx_realtor.json`);
+        const filePath = path.join('files', 'realtor', `${i}_olx_realtor.json`);
         fs.writeFileSync(filePath, JSON.stringify(this.entries, null, 2), 'utf8');
     }
 

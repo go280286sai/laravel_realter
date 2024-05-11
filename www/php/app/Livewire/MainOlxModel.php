@@ -41,6 +41,8 @@ class MainOlxModel extends Component
         $this->rate = MyFunc::getDollar();
         $this->token = MyFunc::getToken()['token'];
         $this->mae = Setting::all()->first()?->MAE;
+        $this->node = env('URL_NODE');
+        $this->flask = env('URL_FLASK');
 
     }
 
@@ -70,11 +72,15 @@ class MainOlxModel extends Component
     {
         $data = time();
         if ($this->time == 0 || $data - $this->time > 1800) {
-            $host = env('URL_NODE').'/api/target';
-            $req = Http::post($host, ['target' => 'realter',
+            $host = $this->node.'/api/target';
+            $req = Http::post($host, ['target' => 'realtor',
                 'url' => $this->url]);
             $status = $req->status();
-            $this->js("alert('".$status."')");
+            if ($status == 200) {
+                session()->flash('status', 'Start to parse. Please wait');
+            } else {
+                session()->flash('status', 'Error to parse');
+            }
             $this->time = $data;
         } else {
             $this->js("alert('request is too fast')");
@@ -83,10 +89,13 @@ class MainOlxModel extends Component
 
     public function loadOlxData(): void
     {
-        $data = time();
-        if ($this->time != 0 && $data - $this->time > 1800) {
+        $req = Http::get(  $this->node.'/api/realtor/24')->body();
+        if ($req == "Not found") {
+            $this->js('alert("Идет загрузка, ожидайте!")');
+            return;
+        }
             for ($i = 0; $i < 25; $i++) {
-                $research = Http::get('http:/192.168.50.70:3000/api/realter/'.$i)->body();
+                $research = Http::get(  $this->node.'/api/realtor/'.$i)->body();
                 $items = json_decode($research);
                 foreach ($items as $item) {
                     try {
@@ -101,9 +110,8 @@ class MainOlxModel extends Component
                             'type' => $item->type,
                             'description' => html_entity_decode($item->description, ENT_QUOTES, 'UTF-8'),
                             'date' => OlxApartment::getDateNew($item->time_),
-                            'location' => OlxApartment::location($item->location),
+                            'location' =>$item->location,
                         ];
-
                         OlxApartment::add($data);
                     } catch (Exception $exception) {
                         Log::info($exception->getMessage().' Line: '.$exception->getLine().' Data: '.date('Y-m-d H:i:s'));
@@ -111,21 +119,22 @@ class MainOlxModel extends Component
 
                 }
             }
-        } else {
-            $this->js("alert('Система занята. Попробуйте позже.')");
-        }
         $this->js('window.location.reload();');
     }
 
     public function cleanAll(): void
     {
+        Http::post(  $this->node.'/api/clean/');
         OlxApartment::cleanBase();
+
+        $this->js('window.location.reload();');
     }
 
     public function runSync(): void
     {
         try {
-            Http::post('http://192.168.50.70:5000/apartment', ['token' => $this->token]);
+            Http::post( $this->flask.'/apartment', ['token' => $this->token]);
+            $this->js('setTimeout(function(){window.location.reload();}, 5000);');
         } catch (Exception $exception) {
             Log::info('Error: '.$exception->getMessage().' Line: '.$exception->getLine().' Data: '.date('Y-m-d H:i:s'));
         }

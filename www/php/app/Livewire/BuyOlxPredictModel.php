@@ -32,6 +32,7 @@ class BuyOlxPredictModel extends Component
     public $service = null;
 
     public $rate = 1;
+    public string $flask;
 
     public function mount($id): void
     {
@@ -44,12 +45,13 @@ class BuyOlxPredictModel extends Component
         $this->etajnost = $this->doc->etajnost;
         $this->location = $this->doc->location;
         $this->rate = MyFunc::getDollar();
+        $this->flask = env('URL_FLASK');
 
     }
 
     public function getApartments(): void
     {
-        $req = Http::post('http://192.168.50.70:5000/getPredict', ['price' => $this->price, 'rooms' => $this->rooms, 'etajnost' => $this->etajnost, 'location' => $this->location]);
+        $req = Http::post( $this->flask.'/getPredict', ['price' => $this->price, 'rooms' => $this->rooms, 'etajnost' => $this->etajnost, 'location' => $this->location]);
         $body = $req->body();
         $ids = json_decode($body)->ids;
         $id = explode(',', $ids);

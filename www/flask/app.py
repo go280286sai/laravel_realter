@@ -1,14 +1,4 @@
-import json
 import os
-
-from flask import Flask, request, jsonify
-import pandas as pd
-import requests
-
-from apps.apartment.OlxLinearRegression import OlxLinearRegression
-
-app = Flask(__name__)
-
 from apps.apartment.Analyze import Analyze
 from apps.apartment.PredictApartment import PredictApartment
 from apps.apartment.PredictListApartment import PredictListApartment
@@ -16,9 +6,17 @@ from apps.db.OlxApartment import OlxApartment
 from flask_cors import CORS
 from apps.apartment.RandomForest import RandomForest
 from dotenv import load_dotenv
+from flask import Flask, request, jsonify
+import pandas as pd
+import requests
+
+from apps.apartment.OlxLinearRegression import OlxLinearRegression
 
 load_dotenv()
-CORS(app, resources={r"/*": {"origins": "http://192.168.50.70:8080/"}})
+
+app = Flask(__name__)
+
+CORS(app, resources={r"/*": {"origins": os.getenv("MAIN_HOST")}})
 
 
 @app.get('/')
@@ -94,6 +92,5 @@ def get_predict():
     return jsonify({"ids": result})
 
 
-
 if __name__ == '__main__':
-    app.run('192.168.50.70', 5000, debug=True)
+    app.run('127.0.0.1', 5000, debug=False)

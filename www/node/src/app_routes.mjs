@@ -1,7 +1,7 @@
 import { run } from "./app_reatler.mjs";
 const start = async (target, url = null) => {
     switch (target) {
-        case "realter":
+        case "realtor":
             if (url == null) {
                 return JSON.stringify({ "status": 400 });
             }
