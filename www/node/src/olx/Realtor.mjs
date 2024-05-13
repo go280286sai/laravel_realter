@@ -3,7 +3,7 @@ import * as cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
 
-class Realter {
+class Realtor {
     constructor() {
         this.baseUrl = 'https://www.olx.ua';
         this.entries = [];
@@ -64,6 +64,6 @@ class Realter {
 
 }
 
-export { Realter };
+export { Realtor };
 
 

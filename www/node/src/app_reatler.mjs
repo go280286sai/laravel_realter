@@ -1,9 +1,9 @@
-import {Realter} from "./olx/Realter.mjs";
+import {Realtor} from "./olx/Realtor.mjs";
 
 const run = async (url) => {
     const prefix = "&page=";
     try {
-        let obj = new Realter();
+        let obj = new Realtor();
         await obj.getUrls(url);
         await obj.getUrl();
         await obj.saveData(1);

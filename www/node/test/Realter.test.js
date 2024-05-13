@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import { Realter } from '../src/olx/Realter.mjs'
+import { Realter } from '../src/olx/Realtor.mjs'
 const url = "https://www.olx.ua/uk/nedvizhimost/kvartiry/kharkov/?currency=UAH";
 describe('Testing realtor', function () {
     describe('#indexOf()', function () {
