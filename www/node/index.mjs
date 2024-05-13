@@ -23,8 +23,13 @@ app.get("/api/realtor/:id", async function (req, res) {
     res.send(file);
 });
 app.post('/api/clean', async function (req, res) {
-    let path_file = path.join("files/","realtor");
-    await removeFiles(path_file);
+    try {
+        let path_file = path.join("files/","realtor");
+        await removeFiles(path_file);
+    } catch (e) {
+        console.log(e);
+    }
+
     res.send(true)
 })
 app.listen(3000, function () {

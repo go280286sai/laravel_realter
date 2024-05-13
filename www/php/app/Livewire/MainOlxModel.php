@@ -41,8 +41,6 @@ class MainOlxModel extends Component
         $this->rate = MyFunc::getDollar();
         $this->token = MyFunc::getToken()['token'];
         $this->mae = Setting::all()->first()?->MAE;
-        $this->node = env('URL_NODE');
-        $this->flask = env('URL_FLASK');
 
     }
 
@@ -72,7 +70,7 @@ class MainOlxModel extends Component
     {
         $data = time();
         if ($this->time == 0 || $data - $this->time > 1800) {
-            $host = $this->node.'/api/target';
+            $host = env('URL_NODE').'/api/target';
             $req = Http::post($host, ['target' => 'realtor',
                 'url' => $this->url]);
             $status = $req->status();
@@ -89,13 +87,13 @@ class MainOlxModel extends Component
 
     public function loadOlxData(): void
     {
-        $req = Http::get(  $this->node.'/api/realtor/24')->body();
+        $req = Http::get(  env('URL_NODE').'/api/realtor/24')->body();
         if ($req == "Not found") {
             $this->js('alert("Идет загрузка, ожидайте!")');
             return;
         }
             for ($i = 0; $i < 25; $i++) {
-                $research = Http::get(  $this->node.'/api/realtor/'.$i)->body();
+                $research = Http::get(  env('URL_NODE').'/api/realtor/'.$i)->body();
                 $items = json_decode($research);
                 foreach ($items as $item) {
                     try {
@@ -124,7 +122,7 @@ class MainOlxModel extends Component
 
     public function cleanAll(): void
     {
-        Http::post(  $this->node.'/api/clean/');
+        Http::post(  env('URL_NODE').'/api/clean/');
         OlxApartment::cleanBase();
 
         $this->js('window.location.reload();');
@@ -133,7 +131,7 @@ class MainOlxModel extends Component
     public function runSync(): void
     {
         try {
-            Http::post( $this->flask.'/apartment', ['token' => $this->token]);
+            Http::post( env('URL_FLASK').'/apartment', ['token' => $this->token]);
             $this->js('setTimeout(function(){window.location.reload();}, 5000);');
         } catch (Exception $exception) {
             Log::info('Error: '.$exception->getMessage().' Line: '.$exception->getLine().' Data: '.date('Y-m-d H:i:s'));

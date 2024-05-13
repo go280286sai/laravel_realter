@@ -32,7 +32,6 @@ class PredictOlxApartmentModel extends Component
     public $client_id;
 
     public $service_id;
-    public string $flask;
 
     public function mount($client_id = null, $service_id = null): void
     {
@@ -41,7 +40,6 @@ class PredictOlxApartmentModel extends Component
         $this->client_id = $client_id;
         $this->rate = MyFunc::getDollar();
         $this->service_id = $service_id;
-        $this->flask = env('URL_FLASK');
     }
 
     /**
@@ -53,7 +51,7 @@ class PredictOlxApartmentModel extends Component
             return $this->predict = 'Заполните все поля!';
         }
         try {
-            $req = Http::post( $this->flask.'/predictApartment', [
+            $req = Http::post( env('URL_FLASK').'/predictApartment', [
                 'rooms' => $this->rooms,
                 'floor' => $this->floor,
                 'etajnost' => $this->etajnost,

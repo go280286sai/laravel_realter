@@ -45,13 +45,12 @@ class BuyOlxPredictModel extends Component
         $this->etajnost = $this->doc->etajnost;
         $this->location = $this->doc->location;
         $this->rate = MyFunc::getDollar();
-        $this->flask = env('URL_FLASK');
 
     }
 
     public function getApartments(): void
     {
-        $req = Http::post( $this->flask.'/getPredict', ['price' => $this->price, 'rooms' => $this->rooms, 'etajnost' => $this->etajnost, 'location' => $this->location]);
+        $req = Http::post( env('URL_FLASK').'/getPredict', ['price' => $this->price, 'rooms' => $this->rooms, 'etajnost' => $this->etajnost, 'location' => $this->location]);
         $body = $req->body();
         $ids = json_decode($body)->ids;
         $id = explode(',', $ids);
